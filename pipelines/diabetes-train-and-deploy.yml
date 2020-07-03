@@ -71,7 +71,7 @@ steps:
     workingDirectory: $(ml-path)
     scriptLocation: inlineScript
     scriptType: 'bash'
-    inlineScript: 'az ml model deploy -n diabetes-qa-aci -f model.json --ic config/inference-config.yml --dc config/deployment-config-aci.yml --overwrite'
+    inlineScript: 'az ml model deploy -n diabetes-qa-aci -f model.json --ic config/inference-config.yml --dc config/deployment-config-aci.yml --overwrite > deploy.json'
 
 # Add potential automated tests
 
@@ -101,7 +101,7 @@ steps:
     workingDirectory: $(ml-path)
     scriptLocation: inlineScript
     scriptType: 'bash'
-    inlineScript: 'az storage blob upload --account-name $(ml-account-name) --account-key $(ml-account-key) --container-name $(ml-container-name)  --file model.json --name model.json'
+    inlineScript: 'az storage blob upload --account-name $(ml-account-name) --account-key $(ml-account-key) --container-name $(ml-container-name)  --file deploy.json --name deploy.json'
 
 #- task: AzureCLI@2
 #  displayName: 'Delete deployed service'
