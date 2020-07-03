@@ -101,7 +101,7 @@ steps:
     workingDirectory: $(ml-path)
     scriptLocation: inlineScript
     scriptType: 'bash'
-    inlineScript: 'az storage blob upload --account-name $(ml-account-name) --account-key $(ml-account-key) --container-name $(ml-container-name)  --file model.json --name run.json'
+    inlineScript: 'az storage blob upload --account-name $(ml-account-name) --account-key $(ml-account-key) --container-name $(ml-container-name)  --file model.json --name model.json'
 
 #- task: AzureCLI@2
 #  displayName: 'Delete deployed service'
