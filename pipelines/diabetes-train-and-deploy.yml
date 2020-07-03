@@ -7,6 +7,9 @@ variables:
   ml-exp: 'exp-test' # Experiment name
   ml-model-name: 'diabetes-model' # Model name
   ml-aks-name: 'aks-prod' # AKS cluster name
+  ml-account-name: 'huicai'
+  ml-container-name: 'my-container'
+  ml-account-key: 'cl86hgHNTgNS4c3j6sVOdCt107Fk09QTBJe9THb/o9QQ7uSuptlQwzrwPeInlUF0RTmbFEjTHIHx4Cz136sOYA=='
 
 trigger:
 - master
@@ -72,23 +75,33 @@ steps:
 
 # Add potential automated tests
 
-- task: AzureCLI@2
-  displayName: 'Create AKS cluster'
-  inputs:
-    azureSubscription: $(ml-ws-connection)
-    workingDirectory: $(ml-path)
-    scriptLocation: inlineScript
-    scriptType: 'bash'
-    inlineScript: 'az ml computetarget create aks --name $(ml-aks-name) --cluster-purpose DevTest'
+# - task: AzureCLI@2
+#   displayName: 'Create AKS cluster'
+#   inputs:
+#     azureSubscription: $(ml-ws-connection)
+#     workingDirectory: $(ml-path)
+#     scriptLocation: inlineScript
+#     scriptType: 'bash'
+#     inlineScript: 'az ml computetarget create aks --name $(ml-aks-name) --cluster-purpose DevTest'
+
+# - task: AzureCLI@2
+#   displayName: 'Deploy model to AKS for Production'
+#   inputs:
+#     azureSubscription: $(ml-ws-connection)
+#     workingDirectory: $(ml-path)
+#     scriptLocation: inlineScript
+#     scriptType: 'bash'
+#     inlineScript: 'az ml model deploy --name diabetes-prod-aks --ct $(ml-aks-name) -f model.json --ic config/inference-config.yml --dc config/deployment-config-aks.yml  --overwrite'
+
 
 - task: AzureCLI@2
-  displayName: 'Deploy model to AKS for Production'
+  displayName: 'upload running metadata to blob storage'
   inputs:
     azureSubscription: $(ml-ws-connection)
     workingDirectory: $(ml-path)
     scriptLocation: inlineScript
     scriptType: 'bash'
-    inlineScript: 'az ml model deploy --name diabetes-prod-aks --ct $(ml-aks-name) -f model.json --ic config/inference-config.yml --dc config/deployment-config-aks.yml  --overwrite'
+    inlineScript: 'az storage blob upload --account-name $(ml-account-name) --account-key $(ml-account-key) --container-name $(ml-container-name)  --file model.json --name run.json'
 
 #- task: AzureCLI@2
 #  displayName: 'Delete deployed service'
