@@ -12,14 +12,45 @@ variables:
   ml-account-key: 'cl86hgHNTgNS4c3j6sVOdCt107Fk09QTBJe9THb/o9QQ7uSuptlQwzrwPeInlUF0RTmbFEjTHIHx4Cz136sOYA=='
   ml-datastore-name: "ai_datastore"
   
-Schedule: 
-      description: "Test create with datastore" 
-      recurrence: ~ 
-      pipeline_parameters: {} 
-      wait_for_provisioning: True 
-      wait_timeout: 3600 
-      datastore_name:  $(ml-datastore-name)
-      polling_interval: 5 
-      # data_path_parameter_name: "input_data" 
-      continue_on_step_failure: None 
-      # path_on_datastore: "file/path"
+#Schedule: 
+#      description: "Test create with datastore" 
+#      recurrence: ~ 
+#      pipeline_parameters: {} 
+#      wait_for_provisioning: True 
+#      wait_timeout: 3600 
+#      datastore_name:  $(ml-datastore-name)
+#      polling_interval: 5 
+#      # data_path_parameter_name: "input_data" 
+#      continue_on_step_failure: None 
+#      # path_on_datastore: "file/path"
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+steps:
+
+- task: AzureCLI@2
+  displayName: 'Install AML CLI'
+  inputs:
+    azureSubscription: $(ml-ws-connection)
+    scriptLocation: inlineScript
+    scriptType: 'bash'
+    inlineScript: 'az extension add -n azure-cli-ml'
+
+- task: AzureCLI@2
+  displayName: 'Attach folder to workspace'
+  inputs:
+    azureSubscription: $(ml-ws-connection)
+    workingDirectory: $(ml-path)
+    scriptLocation: inlineScript
+    scriptType: 'bash'
+    inlineScript: 'az ml folder attach -w $(ml-ws) -g $(ml-rg)'
+
+- task: AzureCLI@2
+  displayName: 'create pipeline'
+  inputs:
+    azureSubscription: $(ml-ws-connection)
+    scriptLocation: inlineScript
+    scriptType: 'bash'
+    inlineScript: 'az ml pipeline create --name cli-pipeline  --pipeline-yaml diabetes-train-and-deploy.yml'
+
