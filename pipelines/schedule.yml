@@ -52,5 +52,5 @@ steps:
     azureSubscription: $(ml-ws-connection)
     scriptLocation: inlineScript
     scriptType: 'bash'
-    inlineScript: 'az ml pipeline create --name cli-pipeline  --pipeline-yaml diabetes-train-and-deploy.yml'
+    inlineScript: 'az ml pipeline create -w $(ml-ws) -g $(ml-rg) --name cli-pipeline  --pipeline-yaml diabetes-train-and-deploy.yml'
 
