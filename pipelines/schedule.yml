@@ -1,0 +1,25 @@
+variables:
+  ml-ws-connection: 'AzureML_demo_ws' # Workspace Service Connection name
+  ml-ws: 'doc-ws' # AML Workspace name
+  ml-rg: 'docs-aml' # AML resource Group name
+  ml-ct: 'cpu-cluster-1' # AML Compute cluster name
+  ml-path: 'models/diabetes' # Model directory path in repo
+  ml-exp: 'exp-test' # Experiment name
+  ml-model-name: 'diabetes-model' # Model name
+  ml-aks-name: 'aks-prod' # AKS cluster name
+  ml-account-name: 'huicai'
+  ml-container-name: 'my-container'
+  ml-account-key: 'cl86hgHNTgNS4c3j6sVOdCt107Fk09QTBJe9THb/o9QQ7uSuptlQwzrwPeInlUF0RTmbFEjTHIHx4Cz136sOYA=='
+  ml-datastore-name: "ai_datastore"
+  
+Schedule: 
+      description: "Test create with datastore" 
+      recurrence: ~ 
+      pipeline_parameters: {} 
+      wait_for_provisioning: True 
+      wait_timeout: 3600 
+      datastore_name:  $(ml-datastore-name)
+      polling_interval: 5 
+      # data_path_parameter_name: "input_data" 
+      continue_on_step_failure: None 
+      # path_on_datastore: "file/path"
