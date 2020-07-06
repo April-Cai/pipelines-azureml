@@ -1,4 +1,4 @@
-name: diabetes-inference-env
+name: tutorial-env
 dependencies:
   - python=3.6.2
   - pip:
