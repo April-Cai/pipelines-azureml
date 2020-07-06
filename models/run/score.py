@@ -18,7 +18,8 @@ def init():
     
     # For demonstration purposes only
     print(mylib.get_alphas())
-# 5.1,3.5,1.4,0.2,Iris-setosa
+# feature: 5.1,3.5,1.4,0.2
+# label: Iris-setosa
 # input_sample = np.array([[10, 9, 8, 7, 6, 5, 4, 3, 2, 1]])
 # output_sample = np.array([3726.995])
 
