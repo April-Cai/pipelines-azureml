@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-<<<<<<<< HEAD:models/run/config/train-conda.yml
 name: diabetes-training-env
-========
-name: diabetes-inference-env
->>>>>>>> parent of b8bf0aa... del unused config:models/diabetes/config/inference-conda.yml
-=======
-name: diabetes-training-env
->>>>>>> parent of b8bf0aa... del unused config
 dependencies:
   - python=3.6.2
   - pip:
