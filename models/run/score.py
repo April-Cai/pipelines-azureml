@@ -11,7 +11,7 @@ from utils import mylib
 
 def init():
     global model
-    model_path = Model.get_model_path('diabetes-model')
+    model_path = Model.get_model_path('auto_ml_model')
 
     with open(model_path, 'rb') as file:
         model = pickle.load(file)
