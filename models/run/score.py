@@ -9,7 +9,7 @@ import joblib
 
 def init():
     global model
-    model_path = Model.get_model_path('auto_ml_model')
+    model_path = os.path.join(os.getenv('AZUREML_MODEL_DIR'), 'auto_ml_model')
     model = joblib.load(model_path)
 
 # input_sample = np.array([[10, 9, 8, 7, 6, 5, 4, 3, 2, 1]])
